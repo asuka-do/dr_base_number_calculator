@@ -58,10 +58,18 @@ $$
 DR目標 $q$、DR継続時間 $T$、信頼度 $1-\alpha$（デフォルト 99.95%）に対する最小局数：
 
 $$
-N^*(q) = \min\left\{N : \Pr\left[\sum_{i=1}^{N} \text{出力}_i(T) \geq q(1-\text{③}\pm\text{幅})\right] \geq 1-\alpha\right\}
+N^*(q) = \min \left\{ N \;\middle|\; \Pr\left[\sum_{i=1}^{N} \text{出力}_i(T) \geq q_\text{lo}\right] \geq 1 - \alpha \right\}
 $$
 
-SAA + 二分探索で計算します。
+ここで達成下限 $q_\text{lo}$ は成功幅 $r$（デフォルト 0.10）を用いて：
+
+$$
+q_\text{lo} = q \times (1 - r)
+$$
+
+例：$q = 1000\text{kW}$, $r = 0.10$ の場合 $q_\text{lo} = 900\text{kW}$。
+
+SAA（Sample Average Approximation）+ 二分探索で計算します。
 
 ### kW-kWh 正相関
 
@@ -169,14 +177,27 @@ KW_STEP = 0.5   # 0.5kW刻み [1.0, 1.5, 2.0, ..., 10.0]
 
 ## Fig4 の3分類定義
 
-すべて逸脱ラインの次の離散時間点で評価：
+すべて逸脱ラインの次の離散時間点 $t_\text{dev}$ で評価。
 
-- **稼働数**: 使用され、持続時間⑦以上残っている局
-  = $N_\text{use} \times (1 - p_\text{fail}) \times P(\mathrm{dur} > t_\text{dev} + \text{⑦})$
-- **退場数**: 使用され、持続時間⑦に到達（または故障）した局
-  = $N_\text{use} \times \{p_\text{fail} + (1 - p_\text{fail}) \times P(\mathrm{dur} \leq t_\text{dev} + \text{⑦})\}$
-- **未使用数**: DR目標が小さく、余剰として使用されていない局
-  = $N^* - N_\text{use}$（ただし $N_\text{use} = \min(N^*, N^*(q))$）
+**稼働数**: 使用され、持続時間⑦以上残っている局
+
+$$
+n_\text{active} = N_\text{use} \times (1 - p_\text{fail}) \times \Pr(\mathrm{dur} > t_\text{dev} + \text{⑦})
+$$
+
+**退場数**: 使用され、持続時間⑦に到達（または故障）した局
+
+$$
+n_\text{retired} = N_\text{use} \times \left[ p_\text{fail} + (1 - p_\text{fail}) \times \Pr(\mathrm{dur} \leq t_\text{dev} + \text{⑦}) \right]
+$$
+
+**未使用数**: DR目標が小さく、余剰として使用されていない局
+
+$$
+n_\text{unused} = N^* - N_\text{use}
+$$
+
+ただし $N_\text{use} = \min(N^*, N^*(q))$。合計は常に $N^*$ となる（$n_\text{active} + n_\text{retired} + n_\text{unused} = N^*$）。
 
 ## Git 運用
 
