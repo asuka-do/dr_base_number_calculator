@@ -58,7 +58,7 @@ $$
 DR目標 $q$、DR継続時間 $T$、信頼度 $1-\alpha$（デフォルト 99.95%）に対する最小局数：
 
 $$
-N^*(q) = \min \left\{ N \;\middle|\; \Pr\left[\sum_{i=1}^{N} \text{出力}_i(T) \geq q_\text{lo}\right] \geq 1 - \alpha \right\}
+N^*(q) = \min \left\lbrace N \,\middle|\, \Pr\left[\sum_{i=1}^{N} \text{出力}_i(T) \geq q_\text{lo}\right] \geq 1 - \alpha \right\rbrace
 $$
 
 ここで達成下限 $q_\text{lo}$ は成功幅 $r$（デフォルト 0.10）を用いて：
