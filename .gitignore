@@ -1,0 +1,61 @@
+# ── Python ──────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ── Jupyter Notebook ────────────────────────────
+.ipynb_checkpoints
+*.ipynb
+
+# ── IDE / Editor ────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ── 生成される図（結果）────────────────────────
+# シミュレーション結果のPNGはコード実行で再現可能なため管理外
+# 特に残したい結果があれば `git add -f <file>` で強制追加
+*.png
+!docs/*.png            # ドキュメント用画像は追加
+
+# ── ログ・キャッシュ ────────────────────────────
+*.log
+*.tmp
+*.bak
+*.cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── OS ──────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── 出力ディレクトリ（デフォルトの出力先を除外）─
+output/
+outputs/
